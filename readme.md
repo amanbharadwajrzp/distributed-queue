@@ -32,4 +32,3 @@ topicsToHandlersMapping = map[string]client.JobHandler{
 		"topic1": NewHandler1(),
 	}
 ```
-#### Start the services with below commands.
