@@ -1,4 +1,4 @@
-# Transaction-server
+# Distrubuted In-memory Queue.
 A simple in-memory queue that supports partitioning and offset management. Multiple consumer workers can subscribe to a single topic.
 
 #### Local Setup Setup broker and worker servers.
