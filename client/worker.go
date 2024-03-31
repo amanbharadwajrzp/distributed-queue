@@ -1,19 +1,19 @@
 package client
 
 import (
-	"mcoding/boot"
-	"mcoding/entity"
-	"mcoding/manager"
+	"distributed-queue/internal/boot"
+	"distributed-queue/internal/entity"
+	"distributed-queue/internal/manager"
 )
 
 type Worker struct {
 	broker    entity.IBroker
 	topic     string
-	handler   entity.JobHandler
+	handler   JobHandler
 	workerMgr manager.IWorkerManager
 }
 
-func (w Worker) Handler(handler entity.JobHandler) IWorker {
+func (w Worker) Handler(handler JobHandler) IWorker {
 	w.handler = handler
 	return w
 }
@@ -37,7 +37,7 @@ func (w Worker) Subscribe() IWorker {
 type IWorker interface {
 	Broker(host string, port int) IWorker
 	Topic(topicName string) IWorker
-	Handler(handler entity.JobHandler) IWorker
+	Handler(handler JobHandler) IWorker
 	Subscribe() IWorker
 }
 

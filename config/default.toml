@@ -1,0 +1,4 @@
+[broker]
+    hostname = "localhost"
+    port = 9092
+    topic = [{"name" = "topic1", "partition" = 0}]

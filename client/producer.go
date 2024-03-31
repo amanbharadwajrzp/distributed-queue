@@ -1,9 +1,9 @@
 package client
 
 import (
-	"mcoding/boot"
-	"mcoding/entity"
-	"mcoding/manager"
+	"distributed-queue/internal/boot"
+	"distributed-queue/internal/entity"
+	"distributed-queue/internal/manager"
 )
 
 type IProducer interface {

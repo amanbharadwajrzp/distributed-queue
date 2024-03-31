@@ -1,9 +1,9 @@
 package client
 
 import (
-	"mcoding/boot"
-	"mcoding/dao"
-	"mcoding/entity"
+	"distributed-queue/internal/boot"
+	"distributed-queue/internal/dao"
+	"distributed-queue/internal/entity"
 )
 
 type IBroker interface {

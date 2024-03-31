@@ -1,4 +1,4 @@
-module mcoding
+module distributed-queue
 
 go 1.21
 
