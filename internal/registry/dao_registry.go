@@ -1,4 +1,4 @@
-package boot
+package registry
 
 import "distributed-queue/internal/dao"
 

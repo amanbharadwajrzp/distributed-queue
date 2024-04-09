@@ -92,7 +92,7 @@ func (c *Config) Load(env string, config interface{}) error {
 
 // loadByConfigName reads configuration from file and unmarshalls into config.
 func (c *Config) loadByConfigName(configName string, config interface{}) error {
-	c.viper.SetEnvPrefix(strings.ToUpper("growth"))
+	c.viper.SetEnvPrefix(strings.ToUpper("queue"))
 	c.viper.SetConfigName(configName)
 	c.viper.SetConfigType(c.opts.configType)
 	c.viper.AddConfigPath(c.opts.configPath)

@@ -1,11 +1,7 @@
-package boot
+package registry
 
 import (
 	"distributed-queue/internal/manager"
-)
-
-var (
-	ManagerRegistryInstance IManagerRegistry
 )
 
 type IManagerRegistry interface {

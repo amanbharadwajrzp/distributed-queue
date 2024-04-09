@@ -1,13 +1,13 @@
 package config
 
 type AppConfig struct {
-	Broker Broker
+	App App
 }
 
-type Broker struct {
+type App struct {
 	Hostname string
 	Port     int
-	Topics   []Topic
+	Topics   []*Topic
 }
 
 type Topic struct {

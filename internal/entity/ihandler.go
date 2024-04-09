@@ -1,6 +1,8 @@
-package client
+package entity
 
-import "context"
+import (
+	"context"
+)
 
 type JobHandler interface {
 	// Handle will be called to process each Job sent via Outboxer. JobPayload is the payload that was sent.
@@ -11,4 +13,6 @@ type JobHandler interface {
 	// Note: This should be returning the payload value, NOT the pointer to the value.
 	// Note: With gob encoder, the payload has to be a non-scalar type. Otherwise you'll have to register all types separately.
 	ZeroPayload() IPayload
+
+	Name() string
 }

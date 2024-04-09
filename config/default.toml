@@ -1,4 +1,4 @@
-[broker]
+[app]
     hostname = "localhost"
-    port = 9092
-    topic = [{"name" = "topic1", "partition" = 0}]
+    port = 9500
+    topics = [{"name" = "topic1", "partitions" = 2}]

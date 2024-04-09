@@ -9,11 +9,15 @@ import (
 type Worker struct {
 	broker    entity.IBroker
 	topic     string
-	handler   JobHandler
+	handler   entity.JobHandler
 	workerMgr manager.IWorkerManager
 }
 
-func (w Worker) Handler(handler JobHandler) IWorker {
+func (w Worker) Stop() bool {
+	return w.workerMgr.Stop()
+}
+
+func (w Worker) Handler(handler entity.JobHandler) IWorker {
 	w.handler = handler
 	return w
 }
@@ -29,16 +33,17 @@ func (w Worker) Topic(topicName string) IWorker {
 }
 
 func (w Worker) Subscribe() IWorker {
-	workerId := w.workerMgr.RegisterWorker(w.broker)
-	w.workerMgr.Start(workerId, w.topic, w.handler)
+	w.workerMgr.RegisterWorker(w.broker, w.handler.Name())
+	w.workerMgr.Start(w.handler.Name(), w.topic, w.handler)
 	return w
 }
 
 type IWorker interface {
 	Broker(host string, port int) IWorker
 	Topic(topicName string) IWorker
-	Handler(handler JobHandler) IWorker
+	Handler(handler entity.JobHandler) IWorker
 	Subscribe() IWorker
+	Stop() bool
 }
 
 func NewWorker() IWorker {

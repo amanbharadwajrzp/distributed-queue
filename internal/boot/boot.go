@@ -2,13 +2,15 @@ package boot
 
 import (
 	"distributed-queue/internal/config"
+	"distributed-queue/internal/registry"
 	"fmt"
 	"log"
 )
 
 var (
 	// Config holds info about growth config
-	Config config.AppConfig
+	Config                  config.AppConfig
+	ManagerRegistryInstance registry.IManagerRegistry
 )
 
 func init() {
@@ -25,6 +27,10 @@ func initConfig() config.AppConfig {
 }
 
 func Initialize() {
-	DaoRegistryInstance = RegisterDao()
-	RegisterManagers(DaoRegistryInstance)
+	registry.DaoRegistryInstance = registry.RegisterDao()
+	ManagerRegistryInstance = registry.RegisterManagers(registry.DaoRegistryInstance)
+}
+
+func GetAppConfig() config.App {
+	return Config.App
 }

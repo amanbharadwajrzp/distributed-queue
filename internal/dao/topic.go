@@ -2,16 +2,22 @@ package dao
 
 import "distributed-queue/internal/entity"
 
-type Topic struct {
+var (
 	topicNameToTopicMapping map[string]entity.Topic
+)
+
+type Topic struct {
 }
 
 func (t Topic) GetTopic(topicName string) entity.Topic {
-	return t.topicNameToTopicMapping[topicName]
+	return topicNameToTopicMapping[topicName]
 }
 
 func (t Topic) SetTopic(topicName string, topic entity.Topic) {
-	t.topicNameToTopicMapping[topicName] = topic
+	if topicNameToTopicMapping == nil {
+		topicNameToTopicMapping = make(map[string]entity.Topic)
+	}
+	topicNameToTopicMapping[topicName] = topic
 }
 
 type ITopic interface {
@@ -20,7 +26,5 @@ type ITopic interface {
 }
 
 func NewTopic() ITopic {
-	return &Topic{
-		topicNameToTopicMapping: make(map[string]entity.Topic),
-	}
+	return &Topic{}
 }

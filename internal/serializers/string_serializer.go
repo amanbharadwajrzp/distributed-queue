@@ -1,20 +1,27 @@
 package serializers
 
-import "distributed-queue/internal/utils"
+import "encoding/json"
 
 type StringSerializable struct {
-	Value interface{}            `json:"value"`
-	Type  utils.SerializableType `json:"type"`
+	Input  interface{} `json:"input"`
+	Output string      `json:"output"`
 }
 
-func NewStringSerializable(value interface{}, t utils.SerializableType) ISerializable {
+func NewStringSerializable(input interface{}) ISerializable {
 	return &StringSerializable{
-		Value: value,
-		Type:  t,
+		Input: input,
 	}
 }
 
 func (s StringSerializable) Serialize() ([]byte, error) {
-	//TODO implement me
-	panic("implement me")
+	output, err := json.Marshal(s.Input)
+	if err != nil {
+		return nil, err
+	}
+	s.Output = string(output)
+	return output, nil
+}
+
+func (s StringSerializable) Get() interface{} {
+	return s.Output
 }

@@ -12,7 +12,7 @@ type Worker struct {
 
 type IWorker interface {
 	Get(workerId string) entity.IWorker
-	Add(broker entity.IBroker) entity.IWorker
+	Add(broker entity.IBroker, workerId string) entity.IWorker
 	Delete(broker entity.IBroker, workerId string) bool
 	List(broker entity.IBroker) []entity.IWorker
 }
@@ -20,6 +20,7 @@ type IWorker interface {
 func NewWorker() IWorker {
 	return &Worker{
 		workerIdToWorkerMap: make(map[string]entity.IWorker),
+		brokerToWorkerMap:   make(map[string][]entity.IWorker),
 	}
 }
 
@@ -27,9 +28,9 @@ func (w Worker) Get(workerId string) entity.IWorker {
 	return w.workerIdToWorkerMap[workerId]
 }
 
-func (w Worker) Add(broker entity.IBroker) entity.IWorker {
+func (w Worker) Add(broker entity.IBroker, workerId string) entity.IWorker {
 	brokerId := entity.GetBrokerId(broker.GetHost(), broker.GetPort())
-	worker := entity.NewWorker(utils.NewUUIDAsString(), broker)
+	worker := entity.NewWorker(workerId, broker)
 	w.workerIdToWorkerMap[worker.GetWorkerId()] = worker
 	if w.brokerToWorkerMap[brokerId] == nil {
 		w.brokerToWorkerMap[brokerId] = make([]entity.IWorker, 0)

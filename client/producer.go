@@ -9,13 +9,18 @@ import (
 type IProducer interface {
 	Topic(topicName string) IProducer
 	Broker(host string, port int) IProducer
-	Publish(payload IPayload) error
+	Build() IProducer
+	Publish(payload entity.IPayload) error
 }
 
 type Producer struct {
 	broker       entity.IBroker
 	topic        string
 	queueManager manager.IQManager
+}
+
+func (p Producer) Build() IProducer {
+	return p
 }
 
 func (p Producer) Topic(topicName string) IProducer {
@@ -28,8 +33,7 @@ func (p Producer) Broker(host string, port int) IProducer {
 	return p
 }
 
-func (p Producer) Publish(payload IPayload) error {
-	payload.SetTopic(p.topic)
+func (p Producer) Publish(payload entity.IPayload) error {
 	return p.queueManager.Enqueue(payload)
 }
 

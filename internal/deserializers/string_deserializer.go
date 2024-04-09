@@ -1,22 +1,21 @@
 package deserializers
 
-import (
-	"distributed-queue/internal/utils"
-)
+import "encoding/json"
 
 type StringDeserializer struct {
-	EncodedValue []byte                 `json:"encoded_value"`
-	Type         utils.SerializableType `json:"type"`
+	EncodedValue []byte `json:"encoded_value"`
 }
 
-func NewStringDeSerializable(encodedValue []byte, t utils.SerializableType) IDeSerializable {
+func NewStringDeSerializable(encodedValue []byte) IDeSerializable {
 	return &StringDeserializer{
 		EncodedValue: encodedValue,
-		Type:         t,
 	}
 }
 
 func (s StringDeserializer) DeSerialize() (interface{}, error) {
-	//TODO implement me
-	panic("implement me")
+	var outputVal interface{}
+	if err := json.Unmarshal(s.EncodedValue, &outputVal); err != nil {
+		return nil, err
+	}
+	return outputVal, nil
 }

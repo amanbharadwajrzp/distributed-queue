@@ -52,6 +52,7 @@ type ISubscription interface {
 
 func NewSubscription() ISubscription {
 	return &Subscription{
-		workerToTopicsMapping: make(map[string][]string),
+		workerToTopicsMapping:           make(map[string][]string),
+		workerToTopicToPartitionMapping: make(map[string]map[string]int),
 	}
 }

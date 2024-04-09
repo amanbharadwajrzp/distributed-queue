@@ -11,7 +11,7 @@ func GetDeSerializer(encodedValue []byte, serializableType utils.SerializableTyp
 	/*case utils.JSON:
 	return &JSONDeserializer{}*/
 	case utils.String:
-		return NewStringDeSerializable(encodedValue, serializableType)
+		return NewStringDeSerializable(encodedValue)
 	/*case utils.Avro:
 	return &AvroDeserializer{}*/
 	default:
