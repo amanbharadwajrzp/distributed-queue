@@ -3,11 +3,12 @@ A simple in-memory queue that supports partitioning and offset management. Multi
 
 #### Local Setup Setup broker and worker servers.
 
-- Run `make go-build-broker` to build api and migrations docker image.
-- Run `make go-build-worker` to build api docker image.
+- Run `make go-run-api` to run api server.
+	- It runs `make go-build-api` that builds api binary.
+
 
 #### Register worker handlers
-Add below worker handlers in `e2e/worker.go` file.
+Add below worker handlers in `cmd/worker.go` file.
 ```go
 type Handler1 struct {
 }
@@ -26,9 +27,20 @@ return &Handler1{}
 }
 ```
 
-Register your workers with the topics in `e2e/worker_mapping.go` file.
+Register your workers with the topics in `cmd/worker_mapping.go` file.
 ```go
 topicsToHandlersMapping = map[string]client.JobHandler{
 		"topic1": NewHandler1(),
 	}
+```
+
+#### Publish messages
+Your server is running on port: 9500, use the below API to publish on a specific topic.
+```curl
+curl --location 'localhost:9500/producer/publish/topic1' \
+--header 'Content-Type: application/json' \
+--data '{
+    "key":"key1",
+    "data":"This is new data"
+}'
 ```
