@@ -63,7 +63,7 @@ go-build-api:
 	@CGO_ENABLED=0 go build -v -o $(API_MAIN_OUT) $(API_MAIN_FILE)
 
 .PHONY: go-run-api ## Run the api server
-go-run-broker: go-build-api
+go-run-api: go-build-api
 	@go run $(API_MAIN_FILE)
 
 .PHONY: build
