@@ -1,11 +1,8 @@
 # Dir where build binaries are generated. The dir should be gitignored
 BUILD_OUT_DIR := "bin/"
 
-BROKER_OUT       := "bin/broker"
-BROKER_MAIN_FILE := "cmd/broker/main.go"
-
-WORKER_OUT       := "bin/worker"
-WORKER_MAIN_FILE := "cmd/worker/main.go"
+API_MAIN_OUT       := "bin/api"
+API_MAIN_FILE := "cmd/startup.go"
 
 ABSOLUTE_PATH := $(shell pwd)
 
@@ -59,26 +56,18 @@ deps:
 	@go install gotest.tools/gotestsum@latest
 
 .PHONY: pre-build
-pre-build: deps go-build-broker go-build-worker
+pre-build: clean deps go-build-api
 
-.PHONY: go-build-broker ## Build the binary file for broker server
-go-build-broker:
-	@CGO_ENABLED=0 go build -v -o $(BROKER_OUT) $(BROKER_MAIN_FILE)
+.PHONY: go-build-api ## Build the binary file for api server
+go-build-api:
+	@CGO_ENABLED=0 go build -v -o $(API_MAIN_OUT) $(API_MAIN_FILE)
 
-.PHONY: go-build-migration ## Build the binary file for database migrations
-go-build-worker:
-	@CGO_ENABLED=0 go build -v -o $(WORKER_OUT) $(WORKER_MAIN_FILE)
-
-.PHONY: go-run-broker ## Run the broker server
-go-run-broker: go-build-broker
-	@go run $(BROKER_MAIN_FILE)
-
-.PHONY: go-run-broker ## Run the worker server
-go-run-worker: go-build-worker
-	@go run $(WORKER_MAIN_FILE)
+.PHONY: go-run-api ## Run the api server
+go-run-broker: go-build-api
+	@go run $(API_MAIN_FILE)
 
 .PHONY: build
-build: build-info  docker-build
+build: build-info pre-build ## Build the binary file for the broker and worker
 
 .PHONY: build-info
 build-info:
@@ -90,5 +79,5 @@ build-info:
 .PHONY: clean
 clean: ## Remove previous builds
 	@echo " + Removing cloned and generated files\n"
-	@rm -rf $(BROKER_OUT) $(WORKER_OUT)
+	@rm -rf $(API_MAIN_OUT)
 
